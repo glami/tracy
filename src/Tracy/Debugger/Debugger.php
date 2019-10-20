@@ -261,6 +261,12 @@ class Debugger
 	public static function shutdownHandler(): void
 	{
 		$error = error_get_last();
+
+		// Glami purposes: adds original command for CLI scripts
+		if (isset($_SERVER['argv'], $error['message'])) {
+			$error['message'] .= ', command: "' . implode(' ', $_SERVER['argv']) .'"';
+		}
+
 		if (in_array($error['type'] ?? null, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE, E_RECOVERABLE_ERROR, E_USER_ERROR], true)) {
 			self::exceptionHandler(Helpers::fixStack(new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line'])));
 		} elseif (($error['type'] ?? null) === E_COMPILE_WARNING) {
@@ -335,14 +341,26 @@ class Debugger
 			}
 		}
 
+		// Glami purposes: logs original command + log to stderr
+		if(!self::$productionMode && PHP_SAPI === 'cli') {
+			if (isset($_SERVER['argv'])) {
+				fwrite(STDERR, 'Args: ' . implode(' ', $_SERVER['argv']) . "\n");
+			}
+			fwrite(STDERR, "Fatal error: $exception\n");
+			fwrite(STDERR, $exception->getTraceAsString() . PHP_EOL);
+		}
+
 		try {
 			foreach ($firstTime ? self::$onFatalError : [] as $handler) {
 				$handler($exception);
 			}
 		} catch (\Throwable $e) {
+			fwrite(STDERR, (string) $e);
+
 			try {
 				self::log($e, self::EXCEPTION);
 			} catch (\Throwable $e) {
+				fwrite(STDERR, (string) $e);
 			}
 		}
 	}
@@ -393,6 +411,7 @@ class Debugger
 			try {
 				self::log($e, self::ERROR);
 			} catch (\Throwable $foo) {
+				fwrite(STDERR, (string) $foo);
 			}
 
 		} elseif (

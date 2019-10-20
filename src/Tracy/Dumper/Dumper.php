@@ -111,7 +111,8 @@ class Dumper
 		if (PHP_SAPI !== 'cli' && !preg_match('#^Content-Type: (?!text/html)#im', implode("\n", headers_list()))) {
 			echo self::toHtml($var, $options);
 		} elseif (self::detectColors()) {
-			echo self::toTerminal($var, $options);
+			// echo self::toTerminal($var, $options);
+			fwrite(STDERR, self::toTerminal($var, $options));
 		} else {
 			echo self::toText($var, $options);
 		}

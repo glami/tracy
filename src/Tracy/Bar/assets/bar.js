@@ -677,7 +677,7 @@
 	}
 
 	let Tracy = window.Tracy = window.Tracy || {};
-	Tracy.panelZIndex = Tracy.panelZIndex || 20000;
+	Tracy.panelZIndex = Tracy.panelZIndex || 900000; // @TODO: there must be better way :-) window.tracy = { panelZIndex: 900000 }
 	Tracy.DebugPanel = Panel;
 	Tracy.DebugBar = Bar;
 	Tracy.Debug = Debug;

@@ -71,7 +71,7 @@ class Bar
 	 */
 	public function render(): void
 	{
-		$useSession = $this->useSession && session_status() === PHP_SESSION_ACTIVE;
+		$useSession = false; // $this->useSession && session_status() === PHP_SESSION_ACTIVE;
 		$redirectQueue = &$_SESSION['_tracy']['redirect'];
 
 		foreach (['bar', 'redirect', 'bluescreen'] as $key) {

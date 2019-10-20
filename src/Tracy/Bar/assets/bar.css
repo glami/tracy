@@ -156,7 +156,7 @@ body#tracy-debug { /* in popup window */
 	min-width: 50px;
 	white-space: nowrap;
 
-	z-index: 30000;
+	z-index: 900001;
 	opacity: .9;
 	transition: opacity 0.2s;
 	will-change: opacity, top, left;
