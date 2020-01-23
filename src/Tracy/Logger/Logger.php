@@ -123,7 +123,8 @@ class Logger implements ILogger
 	{
 		while ($exception) {
 			$data[] = [
-				get_class($exception), $exception->getMessage(), $exception->getCode(), $exception->getFile(), $exception->getLine(),
+				// Intentionally removed $exception->getMessage() To prevent multiple files generation for same exception containing different id, etc `Item '123' was not found`
+				get_class($exception), $exception->getCode(), $exception->getFile(), $exception->getLine(),
 				array_map(function (array $item): array { unset($item['args']); return $item; }, $exception->getTrace()),
 			];
 			$exception = $exception->getPrevious();
