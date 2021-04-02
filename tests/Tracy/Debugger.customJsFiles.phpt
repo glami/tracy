@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Tester\Assert;
 
-
 require __DIR__ . '/../bootstrap.php';
 
 
@@ -16,4 +15,4 @@ $_GET['_tracy_bar'] = 'js';
 $bar->dispatchAssets();
 $output = ob_get_clean();
 
-Assert::contains('/* custom asset </> */', $output);
+Assert::contains('custom-asset {}', $output);

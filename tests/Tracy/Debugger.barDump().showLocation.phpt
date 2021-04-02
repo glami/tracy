@@ -11,7 +11,6 @@ use Tester\Assert;
 use Tester\DomQuery;
 use Tracy\Debugger;
 
-
 require __DIR__ . '/../bootstrap.php';
 
 if (PHP_SAPI === 'cli') {
@@ -36,9 +35,9 @@ register_shutdown_function(function () {
 
 <div class="tracy-inner tracy-DumpPanel">
 
-	<pre class="tracy-dump" title="barDump(&#039;value&#039;)
-in file %a% on line %d%" data-tracy-href="editor:%a%"><span class="tracy-dump-string">"value"</span> (5)
-<small>in <a href="%a%">%a%:%d%</a></small></pre>
+	<pre class="tracy-dump tracy-light"
+><a href="editor:%a%" class="tracy-dump-location" title="in file %a% on line %d%&#10;Click to open in editor">barDump('value') ð</a
+><span class="tracy-dump-string" title="5 characters"><span>'</span>value<span>'</span></span></pre>
 </div>
 %A%
 EOD

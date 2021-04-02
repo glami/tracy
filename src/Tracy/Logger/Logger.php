@@ -111,7 +111,7 @@ class Logger implements ILogger
 	public static function formatLogLine($message, string $exceptionFile = null): string
 	{
 		return implode(' ', [
-			@date('[Y-m-d H-i-s]'), // @ timezone may not be set
+			date('[Y-m-d H-i-s]'),
 			preg_replace('#\s*\r?\n\s*#', ' ', static::formatMessage($message)),
 			' @  ' . Helpers::getSource(),
 			$exceptionFile ? ' @@  ' . basename($exceptionFile) : null,
@@ -136,7 +136,7 @@ class Logger implements ILogger
 				return $dir . $file;
 			}
 		}
-		return $dir . $level . '--' . @date('Y-m-d--H-i') . "--$hash.html"; // @ timezone may not be set
+		return $dir . $level . '--' . date('Y-m-d--H-i') . "--$hash.html";
 	}
 
 
@@ -160,7 +160,7 @@ class Logger implements ILogger
 	{
 		$snooze = is_numeric($this->emailSnooze)
 			? $this->emailSnooze
-			: @strtotime($this->emailSnooze) - time(); // @ timezone may not be set
+			: strtotime($this->emailSnooze) - time();
 
 		if (
 			$this->email
@@ -180,7 +180,7 @@ class Logger implements ILogger
 	 */
 	public function defaultMailer($message, string $email): void
 	{
-		$host = preg_replace('#[^\w.-]+#', '', $_SERVER['HTTP_HOST'] ?? php_uname('n'));
+		$host = preg_replace('#[^\w.-]+#', '', $_SERVER['SERVER_NAME'] ?? php_uname('n'));
 		$parts = str_replace(
 			["\r\n", "\n"],
 			["\n", PHP_EOL],

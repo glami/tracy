@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 use Tracy\Debugger;
 
-
 require __DIR__ . '/../bootstrap.php';
 
 if (PHP_SAPI === 'cli') {
@@ -44,5 +43,5 @@ function third($arg1)
 
 
 define('MY_CONST', 123);
-echo @$undefined;
+@hex2bin('a'); // E_WARNING
 first(10, 'any string');
